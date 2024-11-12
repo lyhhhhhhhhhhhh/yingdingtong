@@ -17,7 +17,7 @@ export const item = [
     {
         key: '/cinema',
         label: <Link href={"/cinema"}>影院</Link>,
-        icon: <CinemaIcon type={"icon-yingyuan"}/>,
+        icon: <MovieIcon type={"icon-yingyuan"}/>,
     },
 
     {

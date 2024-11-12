@@ -11,48 +11,24 @@ import MovieExpectedMoviesList from "@/components/MovieExpectedMoviesList";
 
 export default async function Home() {
     // 直接在服务端获取数据
-    let movieList = [];
-
-    let mostExpectedMovies = [];
-
-    let comingList = [];
-
-    let classicList = [];
-
+    let movieList = [], mostExpectedMovies = [], comingList = [], classicList = [];
     const isComing = true;
 
+    // 并行请求多个数据
     try {
-        const res = await listMovieVoByPageUsingPost({
-            current: 1,
-            pageSize: 8,
-        });
-        movieList = res.data.records;
-    } catch (e) {
-        console.error("获取电影失败", e);
-    }
+        const [movieRes, mostExpectedRes, comingRes, classicRes] = await Promise.all([
+            listMovieVoByPageUsingPost({ current: 1, pageSize: 8 }),
+            axios.get("https://apis.netstart.cn/maoyan/index/mostExpected?ci=1&limit=10&offset=0"),
+            axios.get("https://apis.netstart.cn/maoyan/index/comingList?ci=1&limit=10"),
+            axios.get("https://apis.netstart.cn/maoyan/index/moreClassicList?sortId=1&showType=3&limit=10&offset=0")
+        ]);
 
-    // 获取热门榜单数据
-    try {
-        const mostExpectedRes = await axios.get('https://apis.netstart.cn/maoyan/index/mostExpected?ci=1&limit=10&offset=0');
+        movieList = movieRes.data.records;
         mostExpectedMovies = mostExpectedRes.data.coming;
-    } catch (e) {
-        console.log(e)
-    }
-
-    // 获取即将上映列表
-    try {
-        const comingRes = await axios.get('https://apis.netstart.cn/maoyan/index/comingList?ci=1&limit=10');
         comingList = comingRes.data.coming;
+        classicList = classicRes.data.classics;
     } catch (e) {
-        console.log(e)
-    }
-
-    try {
-        const  moreClassicListRes = await axios.get("https://apis.netstart.cn/maoyan/index/moreClassicList?sortId=1&showType=3&limit=10&offset=0");
-        classicList = moreClassicListRes.data.classics;
-        console.log(classicList)
-    }catch (e) {
-        console.log(e)
+        console.error("获取电影数据失败", e);
     }
 
     return (
@@ -62,7 +38,7 @@ export default async function Home() {
                     <div
                         style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 16}}>
                         <Title level={4} style={{color: "red"}}>正在热映</Title>
-                        <Link href={"/"}>全部&gt;</Link>
+                        <Link href={"/movies"}>全部&gt;</Link>
                     </div>
                     <Row gutter={[16, 16]}>
                         {movieList.length > 0 ? (

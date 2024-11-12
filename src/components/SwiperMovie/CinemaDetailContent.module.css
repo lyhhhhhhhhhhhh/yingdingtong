@@ -1,0 +1,31 @@
+/* CinemaDetailContent.module.css */
+
+.tableContainer {
+    margin: 16px;
+    padding: 16px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.ant-table-thead > tr > th {
+    background-color: #fafafa;
+    font-weight: bold;
+    text-align: center;
+    border-bottom: 2px solid #e8e8e8;
+}
+
+.ant-table-tbody > tr > td {
+    text-align: center;
+}
+
+.ant-btn-primary {
+    background-color: #4CAF50; /* 设置按钮为绿色 */
+    border-color: #4CAF50;
+    color: #fff;
+}
+
+.ant-btn-primary:hover {
+    background-color: #45a049; /* 鼠标悬浮时稍微深一点 */
+    border-color: #45a049;
+}

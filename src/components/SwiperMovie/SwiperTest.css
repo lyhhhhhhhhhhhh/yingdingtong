@@ -1,0 +1,6 @@
+.selected-slide {
+    transform: scale(1.1); /* 放大选中的幻灯片 */
+    transition: transform 0.3s ease-in-out;
+    border: 2px solid #FFD700;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}

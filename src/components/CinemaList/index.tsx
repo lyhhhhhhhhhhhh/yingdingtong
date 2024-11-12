@@ -4,6 +4,7 @@ import {Button, List, Pagination, Row, Select, Space, Tag} from "antd";
 import Title from "antd/es/typography/Title";
 import {listCinemaVoByPageUsingPost} from "@/api/cinemaController";
 import {useEffect, useState} from "react";
+import Link from "next/link";
 
 interface Props {
     cinemaAddress: string
@@ -62,7 +63,7 @@ const CinemaList = (props: Props) => {
     return (
         <>
             <div style={{display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: 16}}>
-                <Title level={4} style={{borderLeft: "4px solid #d9534f", paddingLeft: 8}}>影院列表</Title>
+                <Title level={4} style={{borderLeft: "4px solid skyblue", paddingLeft: 8}}>影院列表</Title>
                 <Select
                     showSearch={false}
                     optionFilterProp="label"
@@ -82,7 +83,7 @@ const CinemaList = (props: Props) => {
                     <List.Item extra={
                         <p style={{color: "red"}}>{item.startingPrice}元起
                             <Button type="primary" style={{marginLeft: 16}} danger={true}
-                                    shape={"round"}>选座购票</Button></p>
+                                    shape={"round"}><Link href={`/cinemaDetail/${item.id}`}>选座购票</Link></Button></p>
                     }>
                         <List.Item.Meta
                             title={<a href="https://ant.design">{item.cinemaTitle}</a>}

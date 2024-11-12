@@ -1,11 +1,12 @@
 "use client";
 
-import {listMovieVoByPageUsingPost} from "@/api/movieController";
-import {Col, Pagination, Radio, Row, Space} from "antd";
+import { listMovieVoByPageUsingPost } from "@/api/movieController";
+import { Col, Pagination, Radio, Row, Space } from "antd";
 import MovieCard from "@/components/MovieCard";
-import {useEffect, useState} from "react";
+import { useCallback, useEffect, useState } from "react";
 import DEFAULT_SORT_ORDER_BY from "@/constants/sortOrder";
 import MovieFilterPanel from "@/components/MovieSelect";
+import Link from "next/link";
 
 const MoviesPage = () => {
     const [movieList, setMovieList] = useState([]);
@@ -18,7 +19,7 @@ const MoviesPage = () => {
     const [selectedYear, setSelectedYear] = useState("");
     const [selectedRegion, setSelectedRegion] = useState("");
 
-    const loadData = async () => {
+    const loadData = useCallback(async () => {
         try {
             const res = await listMovieVoByPageUsingPost({
                 current,
@@ -29,39 +30,37 @@ const MoviesPage = () => {
                 movieYear: selectedYear,
                 movieRegion: selectedRegion,
             });
-            setMovieList(res.data.records);
-            setMovieTotal(res.data.total);
+            const { records, total } = res.data;
+            setMovieList(records);
+            setMovieTotal(total);
         } catch (e) {
             console.error("获取电影失败", e);
         }
-    };
+    }, [current, pageSize, orderBy, sortOrder, selectedType, selectedYear, selectedRegion]);
 
     useEffect(() => {
         loadData();
-    }, [orderBy, current, pageSize, sortOrder, selectedType, selectedYear, selectedRegion]);
+    }, [loadData]);
 
     const onChangeOrder = (e) => {
         setOrderBy(e.target.value);
     };
 
-    // 子组件的回调，用于接收筛选条件的变化
     const onFilterChange = (type, year, region) => {
-        // 判断是否选择了“全部”，如果是，则传递空字符串
         setSelectedType(type === "全部" ? "" : type);
         setSelectedYear(year === "全部" ? "" : year);
         setSelectedRegion(region === "全部" ? "" : region);
     };
 
-    // 分页变化的回调
     const onPageChange = (page, pageSize) => {
         setCurrent(page);
         setPageSize(pageSize);
     };
 
     return (
-        <div style={{marginTop: 16}}>
-            <MovieFilterPanel onFilterChange={onFilterChange}/>
-            <Radio.Group onChange={onChangeOrder} value={orderBy} style={{marginBottom: 16}}>
+        <div style={pageContainerStyle}>
+            <MovieFilterPanel onFilterChange={onFilterChange} />
+            <Radio.Group onChange={onChangeOrder} value={orderBy} style={radioGroupStyle}>
                 <Radio value="createTime">按时间排序</Radio>
                 <Radio value="movieRating">按评分排序</Radio>
             </Radio.Group>
@@ -69,29 +68,26 @@ const MoviesPage = () => {
                 {movieList.length > 0 ? (
                     movieList.map((item) => (
                         <Col key={item.id} span={4}>
-                            <MovieCard
-                                moviePicture={item.moviePicture}
-                                movieTitle={item.movieTitle}
-                                movieId={item.id}
-                                isComing={true}
-                                shoInfo={
-                                    <Space direction="vertical" size="small" style={{display: "flex"}}>
-                                        <p style={{textOverflow: "ellipsis",overflow:"hidden",whiteSpace:"nowrap"}}>{item.movieType}</p>
-                                        <p>{item.createTime.substring(0, 10)}</p>
-                                        <p>时长:{item.movieDuration} 评分:{item.movieRating}</p>
-                                    </Space>
-                                }
-                            />
+                            <Link href={`movie/${item.id}`}>
+                                <MovieCard
+                                    moviePicture={item.moviePicture}
+                                    movieTitle={item.movieTitle}
+                                    movieId={item.id}
+                                    isComing={true}
+                                    shoInfo={
+                                        <MovieInfo item={item} />
+                                    }
+                                />
+                            </Link>
                         </Col>
                     ))
                 ) : (
                     <p>暂无电影数据</p>
                 )}
             </Row>
-            {/* 分页组件 */}
             <Row justify="end">
                 <Pagination
-                    style={{marginTop: 16, marginBottom: 16, textAlign: "center",}}
+                    style={paginationStyle}
                     current={current}
                     pageSize={pageSize}
                     total={movieTotal}
@@ -101,5 +97,20 @@ const MoviesPage = () => {
         </div>
     );
 };
+
+const MovieInfo = ({ item }) => (
+    <Space direction="vertical" size="small" style={movieInfoStyle}>
+        <p style={textEllipsisStyle}>{item.movieType}</p>
+        <p>{item.createTime.substring(0, 10)}</p>
+        <p>时长: {item.movieDuration} 评分: {item.movieRating}</p>
+    </Space>
+);
+
+// 样式对象
+const pageContainerStyle = { marginTop: 16 };
+const radioGroupStyle = { marginBottom: 16 };
+const paginationStyle = { marginTop: 16, marginBottom: 16, textAlign: "center" };
+const movieInfoStyle = { display: "flex" };
+const textEllipsisStyle = { textOverflow: "ellipsis", overflow: "hidden", whiteSpace: "nowrap" };
 
 export default MoviesPage;

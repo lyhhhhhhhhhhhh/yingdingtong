@@ -5,6 +5,18 @@ declare namespace API {
     message?: string;
   };
 
+  type BaseResponseCinemamoviescheduleVO_ = {
+    code?: number;
+    data?: CinemamoviescheduleVO;
+    message?: string;
+  };
+
+  type BaseResponseCinemaMovieVO_ = {
+    code?: number;
+    data?: CinemaMovieVO;
+    message?: string;
+  };
+
   type BaseResponseCinemaVO_ = {
     code?: number;
     data?: CinemaVO;
@@ -32,6 +44,30 @@ declare namespace API {
   type BaseResponsePageCinema_ = {
     code?: number;
     data?: PageCinema_;
+    message?: string;
+  };
+
+  type BaseResponsePageCinemaMovie_ = {
+    code?: number;
+    data?: PageCinemaMovie_;
+    message?: string;
+  };
+
+  type BaseResponsePageCinemamovieschedule_ = {
+    code?: number;
+    data?: PageCinemamovieschedule_;
+    message?: string;
+  };
+
+  type BaseResponsePageCinemamoviescheduleVO_ = {
+    code?: number;
+    data?: PageCinemamoviescheduleVO_;
+    message?: string;
+  };
+
+  type BaseResponsePageCinemaMovieVO_ = {
+    code?: number;
+    data?: PageCinemaMovieVO_;
     message?: string;
   };
 
@@ -102,6 +138,7 @@ declare namespace API {
     editTime?: string;
     id?: number;
     isDelete?: number;
+    startingPrice?: string;
     updateTime?: string;
     userId?: number;
   };
@@ -120,6 +157,138 @@ declare namespace API {
     cinemaTitle?: string;
     id?: number;
     startingPrice?: string;
+    userId?: number;
+  };
+
+  type CinemaMovie = {
+    cinemaId?: number;
+    createTime?: string;
+    id?: number;
+    movieId?: number;
+    updateTime?: string;
+    userId?: number;
+  };
+
+  type CinemaMovieAddRequest = {
+    cinemaId?: number;
+    movieId?: number;
+    userId?: number;
+  };
+
+  type CinemaMovieEditRequest = {
+    cinemaId?: number;
+    id?: number;
+    movieId?: number;
+    userId?: number;
+  };
+
+  type CinemaMovieQueryRequest = {
+    cinemaId?: number;
+    current?: number;
+    id?: number;
+    movieId?: number;
+    notId?: number;
+    pageSize?: number;
+    searchText?: string;
+    sortField?: string;
+    sortOrder?: string;
+    userId?: number;
+  };
+
+  type Cinemamovieschedule = {
+    cinemaHallName?: string;
+    cinemaId?: number;
+    createTime?: string;
+    editTime?: string;
+    id?: number;
+    isDeleted?: number;
+    movieId?: number;
+    movieLanguage?: string;
+    moviePrice?: number;
+    showTime?: string;
+    updateTime?: string;
+    userId?: number;
+  };
+
+  type CinemamoviescheduleAddRequest = {
+    cinemaHallName?: string;
+    cinemaId?: number;
+    movieId?: number;
+    movieLanguage?: string;
+    moviePrice?: number;
+    showTime?: string;
+    userId?: number;
+  };
+
+  type CinemamoviescheduleEditRequest = {
+    cinemaHallName?: string;
+    cinemaId?: number;
+    id?: number;
+    movieId?: number;
+    movieLanguage?: string;
+    moviePrice?: number;
+    showTime?: string;
+    userId?: number;
+  };
+
+  type CinemamoviescheduleQueryRequest = {
+    cinemaHallName?: string;
+    cinemaId?: number;
+    current?: number;
+    id?: number;
+    movieId?: number;
+    movieLanguage?: string;
+    moviePrice?: number;
+    notId?: number;
+    pageSize?: number;
+    searchText?: string;
+    showTime?: string;
+    sortField?: string;
+    sortOrder?: string;
+    userId?: number;
+  };
+
+  type CinemamoviescheduleUpdateRequest = {
+    cinemaHallName?: string;
+    cinemaId?: number;
+    id?: number;
+    movieId?: number;
+    movieLanguage?: string;
+    moviePrice?: number;
+    showTime?: string;
+    userId?: number;
+  };
+
+  type CinemamoviescheduleVO = {
+    cinemaHallName?: string;
+    cinemaId?: number;
+    createTime?: string;
+    id?: number;
+    movieId?: number;
+    movieLanguage?: string;
+    moviePrice?: number;
+    showTime?: string;
+    updateTime?: string;
+    user?: UserVO;
+    userId?: number;
+  };
+
+  type CinemaMovieUpdateRequest = {
+    cinemaId?: number;
+    id?: number;
+    movieId?: number;
+    userId?: number;
+  };
+
+  type CinemaMovieVO = {
+    cinema?: CinemaVO;
+    cinemaId?: number;
+    createTime?: string;
+    id?: number;
+    movieId?: number;
+    movieVOList?: MovieVO[];
+    updateTime?: string;
+    user?: UserVO;
     userId?: number;
   };
 
@@ -163,6 +332,16 @@ declare namespace API {
     id?: number;
   };
 
+  type getCinemamoviescheduleVOByIdUsingGETParams = {
+    /** id */
+    id?: number;
+  };
+
+  type getCinemaMovieVOByIdUsingGETParams = {
+    /** id */
+    id?: number;
+  };
+
   type getCinemaVOByIdUsingGETParams = {
     /** id */
     id?: number;
@@ -202,6 +381,7 @@ declare namespace API {
     moviePicture?: string;
     movieRating?: number;
     movieRegion?: string;
+    movieSynopsis?: string;
     movieTitle?: string;
     movieType?: string;
     updateTime?: string;
@@ -213,6 +393,7 @@ declare namespace API {
     moviePicture?: string;
     movieRating?: number;
     movieRegion?: string;
+    movieSynopsis?: string;
     movieTitle?: string;
     movieType?: string;
     userId?: number;
@@ -224,6 +405,7 @@ declare namespace API {
     moviePicture?: string;
     movieRating?: number;
     movieRegion?: string;
+    movieSynopsis?: string;
     movieTitle?: string;
     movieType?: string;
     userId?: number;
@@ -236,6 +418,7 @@ declare namespace API {
     moviePicture?: string;
     movieRating?: number;
     movieRegion?: string;
+    movieSynopsis?: string;
     movieTitle?: string;
     movieType?: string;
     movieYear?: string;
@@ -253,6 +436,7 @@ declare namespace API {
     moviePicture?: string;
     movieRating?: number;
     movieRegion?: string;
+    movieSynopsis?: string;
     movieTitle?: string;
     movieType?: string;
     userId?: number;
@@ -265,6 +449,7 @@ declare namespace API {
     moviePicture?: string;
     movieRating?: number;
     movieRegion?: string;
+    movieSynopsis?: string;
     movieTitle?: string;
     movieType?: string;
     updateTime?: string;
@@ -285,6 +470,58 @@ declare namespace API {
     orders?: OrderItem[];
     pages?: number;
     records?: Cinema[];
+    searchCount?: boolean;
+    size?: number;
+    total?: number;
+  };
+
+  type PageCinemaMovie_ = {
+    countId?: string;
+    current?: number;
+    maxLimit?: number;
+    optimizeCountSql?: boolean;
+    orders?: OrderItem[];
+    pages?: number;
+    records?: CinemaMovie[];
+    searchCount?: boolean;
+    size?: number;
+    total?: number;
+  };
+
+  type PageCinemamovieschedule_ = {
+    countId?: string;
+    current?: number;
+    maxLimit?: number;
+    optimizeCountSql?: boolean;
+    orders?: OrderItem[];
+    pages?: number;
+    records?: Cinemamovieschedule[];
+    searchCount?: boolean;
+    size?: number;
+    total?: number;
+  };
+
+  type PageCinemamoviescheduleVO_ = {
+    countId?: string;
+    current?: number;
+    maxLimit?: number;
+    optimizeCountSql?: boolean;
+    orders?: OrderItem[];
+    pages?: number;
+    records?: CinemamoviescheduleVO[];
+    searchCount?: boolean;
+    size?: number;
+    total?: number;
+  };
+
+  type PageCinemaMovieVO_ = {
+    countId?: string;
+    current?: number;
+    maxLimit?: number;
+    optimizeCountSql?: boolean;
+    orders?: OrderItem[];
+    pages?: number;
+    records?: CinemaMovieVO[];
     searchCount?: boolean;
     size?: number;
     total?: number;
